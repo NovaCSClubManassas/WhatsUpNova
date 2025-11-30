@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Club - WhatsUpNova</title>
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-primary: #0a0e14;
+            --bg-secondary: #151921;
+            --bg-card: #1a1f2b;
+            --accent-green: #00ff88;
+            --accent-yellow: #ffd700;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --shadow-neon: 0 0 20px rgba(0, 255, 136, 0.3);
+            --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --error-red: #ff4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #0d1117 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* Container */
+        .register-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Logo Section */
+        .register-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon-large {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-yellow));
+            border-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--bg-primary);
+            box-shadow: var(--shadow-neon);
+            margin-bottom: 1rem;
+        }
+
+        .register-logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-logo p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Register Card */
+        .register-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-card);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .register-card:focus-within {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .register-header h2 {
+            color: var(--accent-green);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: var(--accent-green);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-label .required {
+            color: var(--error-red);
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: var(--bg-secondary);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            background: var(--bg-primary);
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .form-helper {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+        }
+
+        /* Password Strength */
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 4px;
+            background: var(--bg-secondary);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+        }
+
+        .strength-weak { background: var(--error-red); width: 33%; }
+        .strength-medium { background: var(--accent-yellow); width: 66%; }
+        .strength-strong { background: var(--accent-green); width: 100%; }
+
+        /* Submit Button */
+        .btn-register {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-green), #00cc70);
+            color: var(--bg-primary);
+            padding: 1.1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-neon);
+            margin-top: 1rem;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .login-link a {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: var(--accent-yellow);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: rgba(0, 255, 136, 0.15);
+            border: 2px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: none;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .register-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Register Container -->
+    <div class="register-container">
+        <!-- Logo -->
+        <div class="register-logo">
+            <div class="logo-icon-large">WN</div>
+            <h1>WhatsUpNova</h1>
+            <p>Register Your Club</p>
+        </div>
+
+        <!-- Register Card -->
+        <div class="register-card">
+            <div class="register-header">
+                <h2>Create Club Account</h2>
+                <p>Get started sharing events with NOVA students</p>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                ✓ Registration successful! Redirecting to login...
+            </div>
+
+            <!-- Register Form -->
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label" for="clubName">
+                        Club Name <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="clubName" 
+                        class="form-input" 
+                        placeholder="e.g., Computer Science Club"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="clubEmail">
+                        Club Email <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="email" 
+                        id="clubEmail" 
+                        class="form-input" 
+                        placeholder="your.club@email.vccs.edu"
+                        required
+                    >
+                    <p class="form-helper">Must be an official NOVA email address</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="campus">
+                        Primary Campus <span class="required">*</span>
+                    </label>
+                    <select id="campus" class="form-select" required>
+                        <option value="">Select a campus</option>
+                        <option value="annandale">Annandale Campus</option>
+                        <option value="alexandria">Alexandria Campus</option>
+                        <option value="loudoun">Loudoun Campus</option>
+                        <option value="manassas">Manassas Campus</option>
+                        <option value="medical">Medical Education Campus</option>
+                        <option value="woodbridge">Woodbridge Campus</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="clubCategory">
+                        Club Category <span class="required">*</span>
+                    </label>
+                    <select id="clubCategory" class="form-select" required>
+                        <option value="">Select a category</option>
+                        <option value="academic">Academic & Study</option>
+                        <option value="sports">Sports & Recreation</option>
+                        <option value="arts">Arts & Culture</option>
+                        <option value="technology">Technology & Computing</option>
+                        <option value="social">Social & Community</option>
+                        <option value="volunteer">Volunteer & Service</option>
+                        <option value="professional">Professional Development</option>
+                        <option value="special">Special Interest</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contactPerson">
+                        Contact Person <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="contactPerson" 
+                        class="form-input" 
+                        placeholder="Full name of club president/officer"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">
+                        Password <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="Create a strong password"
+                        required
+                        minlength="8"
+                    >
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                    <p class="form-helper">At least 8 characters</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">
+                        Confirm Password <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        class="form-input" 
+                        placeholder="Re-enter your password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn-register">
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Login Link -->
+            <div class="login-link">
+                Already have an account? <a href="login.html">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password strength checker
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('strengthBar');
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+            strengthBar.className = 'password-strength-bar';
+            if (strength === 1 || strength === 2) {
+                strengthBar.classList.add('strength-weak');
+            } else if (strength === 3) {
+                strengthBar.classList.add('strength-medium');
+            } else if (strength >= 4) {
+                strengthBar.classList.add('strength-strong');
+            }
+        });
+
+        // Form submission
+        const registerForm = document.getElementById('registerForm');
+        const successMessage = document.getElementById('successMessage');
+
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Collect form data
+            const formData = {
+                clubName: document.getElementById('clubName').value,
+                clubEmail: document.getElementById('clubEmail').value,
+                campus: document.getElementById('campus').value,
+                clubCategory: document.getElementById('clubCategory').value,
+                contactPerson: document.getElementById('contactPerson').value,
+                password: password
+            };
+
+            console.log('Registration data:', formData);
+
+            // Show success message
+            successMessage.classList.add('show');
+
+            // In a real app, you would send this to your backend API
+            // For demo purposes, redirect to login after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

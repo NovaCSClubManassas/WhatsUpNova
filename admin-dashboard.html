@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – WhatsUpNova</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="header">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">WN</div>
+      <div><h1>WhatsUpNova</h1><p>Admin Dashboard</p></div>
+    </a>
+    <a href="index.html" class="back-btn" onclick="localStorage.removeItem('adminLoggedIn')">Logout</a>
+  </div>
+</header>
+
+<div class="container">
+  <h1 class="page-title">Event Approval Queue</h1>
+  <p class="page-subtitle">Review and approve/reject submitted events</p>
+
+  <div id="adminEvents" style="display:grid;gap:2rem;margin-top:2rem;">
+    <!-- Events injected here -->
+  </div>
+</div>
+
+<footer>© 2025 WhatsUpNova • Admin Portal</footer>
+
+<script src="script.js"></script>
+<script>
+  // Protection: if not logged in → kick back to login
+  if (!localStorage.getItem("adminLoggedIn")) {
+    window.location.href = "admin.html";
+  }
+
+  // Load pending events (same as before)
+  const events = JSON.parse(localStorage.getItem("pendingEvents") || "[]");
+  const container = document.getElementById("adminEvents");
+
+  if (events.length === 0) {
+    container.innerHTML = `<p style="text-align:center;color:var(--muted);font-size:1.3rem;padding:3rem;">No pending events. Everything is approved!</p>`;
+    return;
+  }
+
+  events.forEach((ev, i) => {
+    const card = document.createElement("div");
+    card.className = "card pending-card";
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:start;">
+        <div>
+          <h3 style="color:var(--green);font-size:1.5rem;margin-bottom:.5rem;">${ev.title}</h3>
+          <p><strong>Club:</strong> ${ev.organizer} • <strong>Date:</strong> ${ev.date} @ ${ev.startTime}</p>
+          <p><strong>Location:</strong> ${ev.location} (${ev.campus})</p>
+          <p style="margin:1rem 0;">${ev.description}</p>
+          <small style="color:var(--muted);">Submitted by: ${ev.email}</small>
+        </div>
+        <span style="background:#ffd70033;color:var(--yellow);padding:.5rem 1rem;border-radius:50px;font-weight:600;">PENDING</span>
+      </div>
+      <div style="margin-top:1.5rem;display:flex;gap:1rem;">
+        <button onclick="approve(${i})" style="background:var(--green);color:#000;padding:.8rem 1.8rem;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Approve</button>
+        <button onclick="reject(${i})" style="background:var(--error);color:#fff;padding:.8rem 1.8rem;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Reject</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  window.approve = function(i) {
+    if (confirm("Approve this event?")) {
+      events.splice(i, 1);
+      localStorage.setItem("pendingEvents", JSON.stringify(events));
+      location.reload();
+    }
+  };
+
+  window.reject = function(i) {
+    if (confirm("Reject this event?")) {
+      events.splice(i, 1);
+      localStorage.setItem("pendingEvents", JSON.stringify(events));
+      location.reload();
+    }
+  };
+</script>
+</body>
+</html>

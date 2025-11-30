@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event - WhatsUpNova</title>
+    <style>
+        /* CSS Variables - matching homepage */
+        :root {
+            --bg-primary: #0a0e14;
+            --bg-secondary: #151921;
+            --bg-card: #1a1f2b;
+            --accent-green: #00ff88;
+            --accent-yellow: #ffd700;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --shadow-neon: 0 0 20px rgba(0, 255, 136, 0.3);
+            --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --error-red: #ff4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #0d1117 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--bg-secondary);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 255, 136, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--accent-green);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-yellow));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--bg-primary);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .back-btn {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 0.9rem 2rem;
+            border: 2px solid var(--accent-green);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-neon);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-card);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .form-card:focus-within {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: var(--accent-green);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .form-label .required {
+            color: var(--error-red);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: var(--bg-secondary);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            background: var(--bg-primary);
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        /* Two Column Layout */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Helper Text */
+        .form-helper {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Character Counter */
+        .char-counter {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--bg-secondary);
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, var(--accent-green), #00cc70);
+            color: var(--bg-primary);
+            padding: 1.1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-neon);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(0, 255, 136, 0.5);
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 1.1rem 2rem;
+            border: 2px solid var(--text-secondary);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(255, 215, 0, 0.1));
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .info-box-title {
+            color: var(--accent-green);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-box-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: rgba(0, 255, 136, 0.15);
+            border: 2px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            animation: slideDown 0.5s ease;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--bg-card);
+            margin-top: 3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+
+        .header-content {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-card {
+            padding: 1.5rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .page-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+</head> <body> <!-- Header --> <header class="header"> <div class="header-content"> <a href="index.html" class="logo"> <div class="logo-icon">WN</div> <div class="logo-text"> <h1>WhatsUpNova</h1> <p>Northern Virginia Community College Events</p> </div> </a> <a href="index.html" class="back-btn">← Back to Events</a> </div> </header>
+<!-- Main Content -->
+<main class="container">
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <span style="font-size: 1.5rem;">✓</span>
+        <div>
+            <strong>Event submitted successfully!</strong>
+            <p style="margin-top: 0.3rem; font-size: 0.9rem;">Your event is pending approval and will appear on the homepage soon.</p>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Add New Event</h1>
+        <p class="page-subtitle">Share what's happening at NOVA with the community</p>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-box">
+        <div class="info-box-title">
+            <span>📋</span>
+            <span>Submission Guidelines</span>
+        </div>
+        <p class="info-box-text">
+            All events are subject to approval. Please provide accurate information and ensure your event complies with NOVA's student conduct policies.
+        </p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="form-card">
+        <form id="eventForm">
+            <!-- Event Title -->
+            <div class="form-group">
+                <label class="form-label" for="eventTitle">
+                    Event Title <span class="required">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="eventTitle" 
+                    class="form-input" 
+                    placeholder="e.g., Computer Science Club Meeting"
+                    required
+                    maxlength="100"
+                >
+                <div class="char-counter">
+                    <span id="titleCounter">0</span>/100 characters
+                </div>
+            </div>
+
+            <!-- Event Description -->
+            <div class="form-group">
+                <label class="form-label" for="eventDescription">
+                    Event Description <span class="required">*</span>
+                </label>
+                <textarea 
+                    id="eventDescription" 
+                    class="form-textarea" 
+                    placeholder="Describe what attendees can expect from this event..."
+                    required
+                    maxlength="500"
+                ></textarea>
+                <div class="char-counter">
+                    <span id="descCounter">0</span>/500 characters
+                </div>
+            </div>
+
+            <!-- Date and Time Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="eventDate">
+                        Event Date <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="date" 
+                        id="eventDate" 
+                        class="form-input"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="eventTime">
+                        Start Time <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="time" 
+                        id="eventTime" 
+                        class="form-input"
+                        required
+                    >
+                </div>
+            </div>
+
+            <!-- Duration and End Time -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="eventDuration">
+                        Duration
+                    </label>
+                    <select id="eventDuration" class="form-select">
+                        <option value="">Select duration</option>
+                        <option value="30">30 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="90">1.5 hours</option>
+                        <option value="120">2 hours</option>
+                        <option value="150">2.5 hours</option>
+                        <option value="180">3 hours</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <p class="form-helper">💡 Helps attendees plan their schedule</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="eventEndTime">
+                        End Time
+                    </label>
+                    <input 
+                        type="time" 
+                        id="eventEndTime" 
+                        class="form-input"
+                    >
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+                <label class="form-label" for="eventLocation">
+                    Location <span class="required">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="eventLocation" 
+                    class="form-input" 
+                    placeholder="e.g., Annandale Campus - Room A210"
+                    required
+                >
+                <p class="form-helper">📍 Include campus name and room/building number</p>
+            </div>
+
+            <!-- Campus Selection -->
+            <div class="form-group">
+                <label class="form-label" for="campusSelect">
+                    Campus <span class="required">*</span>
+                </label>
+                <select id="campusSelect" class="form-select" required>
+                    <option value="">Select a campus</option>
+                    <option value="annandale">Annandale Campus</option>
+                    <option value="alexandria">Alexandria Campus</option>
+                    <option value="loudoun">Loudoun Campus</option>
+                    <option value="manassas">Manassas Campus</option>
+                    <option value="medical">Medical Education Campus</option>
+                    <option value="woodbridge">Woodbridge Campus</option>
+                </select>
+            </div>
+
+            <!-- Organizer Info -->
+            <div class="form-group">
+                <label class="form-label" for="organizer">
+                    Organizer/Club Name <span class="required">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="organizer" 
+                    class="form-input" 
+                    placeholder="e.g., Computer Science Club"
+                    required
+                >
+                <p class="form-helper">👥 Name of the club or organization hosting this event</p>
+            </div>
+
+            <!-- Contact Email -->
+            <div class="form-group">
+                <label class="form-label" for="contactEmail">
+                    Contact Email <span class="required">*</span>
+                </label>
+                <input 
+                    type="email" 
+                    id="contactEmail" 
+                    class="form-input" 
+                    placeholder="your.email@email.vccs.edu"
+                    required
+                >
+                <p class="form-helper">📧 For event verification purposes (not displayed publicly)</p>
+            </div>
+
+            <!-- Event Category -->
+            <div class="form-group">
+                <label class="form-label" for="eventCategory">
+                    Event Category <span class="required">*</span>
+                </label>
+                <select id="eventCategory" class="form-select" required>
+                    <option value="">Select a category</option>
+                    <option value="academic">Academic & Study</option>
+                    <option value="club">Club Meeting</option>
+                    <option value="sports">Sports & Recreation</option>
+                    <option value="arts">Arts & Culture</option>
+                    <option value="social">Social Event</option>
+                    <option value="volunteer">Volunteer & Service</option>
+                    <option value="workshop">Workshop & Training</option>
+                    <option value="career">Career & Professional</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="form-group">
+                <label class="form-label" for="additionalNotes">
+                    Additional Notes
+                </label>
+                <textarea 
+                    id="additionalNotes" 
+                    class="form-textarea" 
+                    placeholder="Any special requirements, prerequisites, or things attendees should know..."
+                    maxlength="300"
+                    style="min-height: 80px;"
+                ></textarea>
+                <div class="char-counter">
+                    <span id="notesCounter">0</span>/300 characters
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" onclick="resetForm()">
+                    Clear Form
+                </button>
+                <button type="submit" class="btn-primary">
+                    Submit Event for Approval
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 WhatsUpNova | Northern Virginia Community College</p>
+    <p>Built with 💚 for NOVA students</p>
+</footer>
+
+<script>
+    // Character counters
+    const titleInput = document.getElementById('eventTitle');
+    const descInput = document.getElementById('eventDescription');
+    const notesInput = document.getElementById('additionalNotes');
+    const titleCounter = document.getElementById('titleCounter');
+    const descCounter = document.getElementById('descCounter');
+    const notesCounter = document.getElementById('notesCounter');
+
+    titleInput.addEventListener('input', () => {
+        titleCounter.textContent = titleInput.value.length;
+    });
+
+    descInput.addEventListener('input', () => {
+        descCounter.textContent = descInput.value.length;
+    });
+
+    notesInput.addEventListener('input', () => {
+        notesCounter.textContent = notesInput.value.length;
+    });
+
+    // Auto-calculate end time based on duration
+    const durationSelect = document.getElementById('eventDuration');
+    const startTimeInput = document.getElementById('eventTime');
+    const endTimeInput = document.getElementById('eventEndTime');
+
+    durationSelect.addEventListener('change', function() {
+        if (this.value && this.value !== 'custom' && startTimeInput.value) {
+            const startTime = new Date('1970-01-01T' + startTimeInput.value);
+            const duration = parseInt(this.value);
+            const endTime = new Date(startTime.getTime() + duration * 60000);
+            
+            const hours = String(endTime.getHours()).padStart(2, '0');
+            const minutes = String(endTime.getMinutes()).padStart(2, '0');
+            endTimeInput.value = `${hours}:${minutes}`;
+        }
+    });
+
+    startTimeInput.addEventListener('change', function() {
+        if (durationSelect.value && durationSelect.value !== 'custom') {
+            durationSelect.dispatchEvent(new Event('change'));
+        }
+    });
+
+    // Form submission
+    const eventForm = document.getElementById('eventForm');
+    const successMessage = document.getElementById('successMessage');
+
+    eventForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Collect form data
+        const formData = {
+            title: titleInput.value,
+            description: descInput.value,
+            date: document.getElementById('eventDate').value,
+            startTime: startTimeInput.value,
+            endTime: endTimeInput.value,
+            location: document.getElementById('eventLocation').value,
+            campus: document.getElementById('campusSelect').value,
+            organizer: document.getElementById('organizer').value,
+            email: document.getElementById('contactEmail').value,
+            category: document.getElementById('eventCategory').value,
+            notes: notesInput.value
+        };
+
+        console.log('Event submitted:', formData);
+        const pending = JSON.parse(localStorage.getItem("pendingEvents") || "[]");
+        pending.push(formData);
+        localStorage.setItem("pendingEvents", JSON.stringify(pending));
+        
+        // Show success message
+        successMessage.classList.add('show');
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Reset form after short delay
+        setTimeout(() => {
+            eventForm.reset();
+            titleCounter.textContent = '0';
+            descCounter.textContent = '0';
+            notesCounter.textContent = '0';
+        }, 1000);
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+            successMessage.classList.remove('show');
+        }, 5000);
+    });
+
+    // Reset form function
+    function resetForm() {
+        if (confirm('Are you sure you want to clear all fields?')) {
+            eventForm.reset();
+            titleCounter.textContent = '0';
+            descCounter.textContent = '0';
+            notesCounter.textContent = '0';
+            successMessage.classList.remove('show');
+        }
+    }
+
+    // Set minimum date to today
+    const dateInput = document.getElementById('eventDate');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+</script>
+</body> </html>

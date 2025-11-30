@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsUpNova - NOVA Events</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">WN</div>
+        <div><h1>WhatsUpNova</h1><p>NOVA Events Hub</p></div>
+      </a>
+      <a href="login.html" class="login-btn">Club Login</a>
+    </div><!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>WhatsUpNova - NOVA Events Hub</title>
+        <style>
+            /* CSS Variables for easy theming */
+            :root {
+                --bg-primary: #0a0e14;
+                --bg-secondary: #151921;
+                --bg-card: #1a1f2b;
+                --accent-green: #00ff88;
+                --accent-yellow: #ffd700;
+                --text-primary: #e8e8e8;
+                --text-secondary: #a0a0a0;
+                --shadow-neon: 0 0 20px rgba(0, 255, 136, 0.3);
+                --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.3);
+            }
+    
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+    
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, var(--bg-primary) 0%, #0d1117 100%);
+                color: var(--text-primary);
+                line-height: 1.6;
+                min-height: 100vh;
+            }
+    
+            /* Header Styles */
+            .header {
+                background: var(--bg-secondary);
+                padding: 1.5rem 2rem;
+                box-shadow: 0 2px 10px rgba(0, 255, 136, 0.1);
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                border-bottom: 2px solid var(--accent-green);
+            }
+    
+            .header-content {
+                max-width: 1400px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+    
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+    
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                background: linear-gradient(135deg, var(--accent-green), var(--accent-yellow));
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: var(--bg-primary);
+                box-shadow: var(--shadow-neon);
+            }
+    
+            .logo-text h1 {
+                font-size: 1.8rem;
+                font-weight: 700;
+                background: linear-gradient(135deg, var(--accent-green), var(--accent-yellow));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+    
+            .logo-text p {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+            }
+    
+            .add-event-btn {
+                background: linear-gradient(135deg, var(--accent-green), #00cc70);
+                color: var(--bg-primary);
+                padding: 0.9rem 2rem;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: var(--shadow-neon);
+                text-decoration: none;
+                display: inline-block;
+            }
+    
+            .add-event-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            }
+    
+            /* Main Container */
+            .container {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+    
+            /* Info Banner */
+            .info-banner {
+                background: var(--bg-card);
+                padding: 1.5rem;
+                border-radius: 12px;
+                margin-bottom: 2rem;
+                border-left: 4px solid var(--accent-yellow);
+                box-shadow: var(--shadow-card);
+            }
+    
+            .info-banner h2 {
+                color: var(--accent-yellow);
+                margin-bottom: 0.5rem;
+            }
+    
+            /* Week Navigation */
+            .week-nav {
+                display: flex;
+                gap: 1rem;
+                margin-bottom: 2rem;
+                overflow-x: auto;
+                padding: 1rem 0;
+            }
+    
+            .day-tab {
+                background: var(--bg-card);
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border: 2px solid transparent;
+                min-width: 140px;
+                text-align: center;
+            }
+    
+            .day-tab:hover {
+                border-color: var(--accent-green);
+                transform: translateY(-3px);
+            }
+    
+            .day-tab.active {
+                background: linear-gradient(135deg, var(--accent-green), #00cc70);
+                color: var(--bg-primary);
+                box-shadow: var(--shadow-neon);
+            }
+    
+            .day-name {
+                font-weight: 700;
+                font-size: 1.1rem;
+                margin-bottom: 0.3rem;
+            }
+    
+            .day-date {
+                font-size: 0.9rem;
+                opacity: 0.8;
+            }
+    
+            /* Events Grid */
+            .events-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+            }
+    
+            .event-card {
+                background: var(--bg-card);
+                border-radius: 12px;
+                padding: 1.5rem;
+                transition: all 0.3s ease;
+                border: 2px solid transparent;
+                box-shadow: var(--shadow-card);
+                position: relative;
+                overflow: hidden;
+            }
+    
+            .event-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background: linear-gradient(90deg, var(--accent-green), var(--accent-yellow));
+            }
+    
+            .event-card:hover {
+                transform: translateY(-5px);
+                border-color: var(--accent-green);
+                box-shadow: 0 8px 20px rgba(0, 255, 136, 0.2);
+            }
+    
+            .event-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1rem;
+            }
+    
+            .event-time {
+                background: var(--accent-green);
+                color: var(--bg-primary);
+                padding: 0.4rem 0.8rem;
+                border-radius: 6px;
+                font-weight: 700;
+                font-size: 0.9rem;
+            }
+    
+            .event-status {
+                padding: 0.3rem 0.7rem;
+                border-radius: 6px;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+    
+            .status-open {
+                background: rgba(0, 255, 136, 0.2);
+                color: var(--accent-green);
+                border: 1px solid var(--accent-green);
+            }
+    
+            .status-upcoming {
+                background: rgba(255, 215, 0, 0.2);
+                color: var(--accent-yellow);
+                border: 1px solid var(--accent-yellow);
+            }
+    
+            .event-title {
+                font-size: 1.3rem;
+                font-weight: 700;
+                margin-bottom: 0.7rem;
+                color: var(--accent-green);
+            }
+    
+            .event-description {
+                color: var(--text-secondary);
+                margin-bottom: 1rem;
+                font-size: 0.95rem;
+            }
+    
+            .event-meta {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+    
+            .meta-item {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+            }
+    
+            .meta-icon {
+                color: var(--accent-yellow);
+                font-weight: bold;
+            }
+    
+            /* Empty State */
+            .empty-state {
+                text-align: center;
+                padding: 4rem 2rem;
+                background: var(--bg-card);
+                border-radius: 12px;
+                border: 2px dashed var(--accent-green);
+            }
+    
+            .empty-state-icon {
+                font-size: 4rem;
+                margin-bottom: 1rem;
+            }
+    
+            .empty-state h3 {
+                color: var(--accent-green);
+                margin-bottom: 0.5rem;
+            }
+    
+            /* Footer */
+            .footer {
+                text-align: center;
+                padding: 2rem;
+                color: var(--text-secondary);
+                border-top: 1px solid var(--bg-card);
+                margin-top: 3rem;
+            }
+    
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .header-content {
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+    
+                .events-grid {
+                    grid-template-columns: 1fr;
+                }
+    
+                .week-nav {
+                    flex-wrap: nowrap;
+                    justify-content: flex-start;
+                }
+    
+                .day-tab {
+                    min-width: 120px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">WN</div>
+                    <div class="logo-text">
+                        <h1>WhatsUpNova</h1>
+                        <p>Northern Virginia Community College Events</p>
+                    </div>
+                </div>
+                <a href="add-event.html" class="add-event-btn">+ Add Event</a>
+            </div>
+        </header>
+    
+        <!-- Main Content -->
+        <main class="container">
+            <!-- Info Banner -->
+            <div class="info-banner">
+                <h2>📅 This Week at NOVA</h2>
+                <p>Stay connected with campus life! Browse events, join clubs, and never miss what's happening at Northern Virginia Community College.</p>
+            </div>
+    
+            <!-- Week Navigation -->
+            <div class="week-nav">
+                <div class="day-tab active">
+                    <div class="day-name">Monday</div>
+                    <div class="day-date">Nov 25</div>
+                </div>
+                <div class="day-tab">
+                    <div class="day-name">Tuesday</div>
+                    <div class="day-date">Nov 26</div>
+                </div>
+                <div class="day-tab">
+                    <div class="day-name">Wednesday</div>
+                    <div class="day-date">Nov 27</div>
+                </div>
+                <div class="day-tab">
+                    <div class="day-name">Thursday</div>
+                    <div class="day-date">Nov 28</div>
+                </div>
+                <div class="day-tab">
+                    <div class="day-name">Friday</div>
+                    <div class="day-date">Nov 29</div>
+                </div>
+                <div class="day-tab">
+                    <div class="day-name">Saturday</div>
+                    <div class="day-date">Nov 30</div>
+                </div>
+                <div class="day-tab">
+                    <div class="day-name">Sunday</div>
+                    <div class="day-date">Dec 1</div>
+                </div>
+            </div>
+    
+            <!-- Events Grid -->
+            <div class="events-grid">
+                <!-- Event Card 1 -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-time">10:00 AM</div>
+                        <div class="event-status status-open">HAPPENING NOW</div>
+                    </div>
+                    <h3 class="event-title">Computer Science Club Meeting</h3>
+                    <p class="event-description">Join us for our weekly meetup! We'll be discussing web development and working on group projects.</p>
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Annandale Campus - Room A210</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">👥</span>
+                            <span>Computer Science Club</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>10:00 AM - 12:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Event Card 2 -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-time">1:00 PM</div>
+                        <div class="event-status status-upcoming">UPCOMING</div>
+                    </div>
+                    <h3 class="event-title">Study Abroad Info Session</h3>
+                    <p class="event-description">Learn about opportunities to study abroad and expand your global perspective. Free pizza!</p>
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Student Center - Main Hall</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">👥</span>
+                            <span>International Programs Office</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>1:00 PM - 2:30 PM</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Event Card 3 -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-time">3:00 PM</div>
+                        <div class="event-status status-upcoming">UPCOMING</div>
+                    </div>
+                    <h3 class="event-title">Basketball Practice</h3>
+                    <p class="event-description">Open gym for all skill levels. Come play pickup games and meet new people!</p>
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Gymnasium - Court 1</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">👥</span>
+                            <span>Athletics Department</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>3:00 PM - 5:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Event Card 4 -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-time">5:30 PM</div>
+                        <div class="event-status status-upcoming">UPCOMING</div>
+                    </div>
+                    <h3 class="event-title">Art Club: Acrylic Painting Workshop</h3>
+                    <p class="event-description">No experience needed! All materials provided. Come express your creativity with fellow students.</p>
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Fine Arts Building - Studio 3</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">👥</span>
+                            <span>NOVA Art Club</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>5:30 PM - 7:30 PM</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Event Card 5 -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-time">6:00 PM</div>
+                        <div class="event-status status-upcoming">UPCOMING</div>
+                    </div>
+                    <h3 class="event-title">Gaming Tournament: Super Smash Bros</h3>
+                    <p class="event-description">Weekly tournament with prizes! All skill levels welcome. Bring your competitive spirit!</p>
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Student Lounge - Game Room</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">👥</span>
+                            <span>Gaming Club</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>6:00 PM - 9:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Event Card 6 -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-time">7:00 PM</div>
+                        <div class="event-status status-upcoming">UPCOMING</div>
+                    </div>
+                    <h3 class="event-title">Open Mic Night</h3>
+                    <p class="event-description">Share your talents! Music, poetry, comedy - all performers welcome. Audience always appreciated!</p>
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Student Center - Theater</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">👥</span>
+                            <span>Student Activities Board</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>7:00 PM - 9:30 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 WhatsUpNova | Northern Virginia Community College</p>
+            <p>Built with 💚 for NOVA students</p>
+        </footer>
+    
+        <script>
+            // Add interactivity for day tabs
+            const dayTabs = document.querySelectorAll('.day-tab');
+            
+            dayTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    dayTabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // In a real app, this would filter events by day
+                    console.log('Selected day:', this.querySelector('.day-name').textContent);
+                });
+            });
+    
+            // Add smooth scroll behavior
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        </script>
+    </body>
+    </html>
+  </header>
+
+  <div class="container">
+    <!-- Your full index content here (events grid, etc.) -->
+    <!-- Keep everything exactly as you had it -->
+    <!-- Just remove the old <style> and <script> -->
+  </div>
+
+  <footer>&copy; 2025 WhatsUpNova • Built for NOVA students</footer>
+  <script src="script.js"></script>
+</body>
+</html>
